@@ -1,0 +1,102 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.42.1/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>591爬蟲 - vuetify</title>
+</head>
+<body>
+  <div id="app" class="mx-auto my-[2rem] max-w-[90%]" data-app="true">
+    <div class="overflow-x-auto">
+      <div class="btn-group mb-8">
+        <a href="./bug591.html" class="btn">原生</a>
+        <a href="./bug591_vuetify.html" class="btn btn-active">vuetify</a>
+      </div>
+      <template>
+        <v-card>
+          <v-card-title class="pl-0">
+            <v-spacer>
+              <button
+                type="button" 
+                class="btn bg-green-500 text-white hover:bg-green-400"
+                @click="filterTitieDoubleItem(['社宅', '社會住宅'])"
+              >過濾社宅</button>
+              <button
+                type="button" 
+                class="btn bg-teal-400 text-white hover:bg-teal-300"
+                @click="filterTitieDoubleItem(['空屋', '空房'])"
+              >過濾空屋</button>
+              <button
+                type="button" 
+                class="btn bg-cyan-400 text-white hover:bg-cyan-300"
+                @click="filterTitieOneItem(filterCondition)"
+              >過濾</button>
+              <input 
+                v-model="filterCondition" 
+                type="text" 
+                placeholder="輸入過濾條件" 
+                class="input input-bordered border-gray-200 w-full py-0 mx-1 max-w-xs" 
+                @focus="filterCondition = null"/>
+            </v-spacer>
+            <v-text-field
+              v-model="search"
+              label="Search"
+              single-line
+              hide-details
+              show-select
+            ></v-text-field>
+          </v-card-title>
+          <v-data-table
+            :headers="rentData_vuetify.headers"
+            :items="rentData"
+            :search="search"
+            :rows-per-page-items='[10,25,50,{"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}]'
+          >
+          <template v-slot:items="props">
+            <tr class="cursor-pointer" @click="redirect($event, `https://rent.591.com.tw/home/${props.item.post_id}`)">
+              <td>
+                <button
+                  type="button" 
+                  class="btn-del btn bg-red-500 text-white hover:bg-red-400"
+                  @click="removeItem(props.item)"
+                >刪除</button>
+              </td>
+              <td v-for="value in valueItem">
+                <span :class="value == 'price' && formatNumber(props.item[value]) <= 15000 ? 'text-purple-600 font-bold' : ''">{{ props.item[value] }}</span>
+              </td>
+            </tr>
+          </template>
+          </v-data-table>
+        </v-card>
+      </template>
+    </div>
+  </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@1.x/dist/vuetify.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="./bug591.js"></script>
+
+<style>
+  html {
+    font-size: 16px !important;
+  }
+  table.v-table thead th, table.v-table tbody td {
+      font-size: 1rem !important;
+      padding: 1.5rem 0 !important;
+  }
+  table.v-table thead th {
+    font-weight: 600;
+  }
+  table.v-table thead th.column {
+    padding: 0 !important;
+  }
+</style>
+</html>

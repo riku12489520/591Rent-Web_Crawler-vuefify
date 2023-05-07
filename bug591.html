@@ -1,0 +1,52 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.42.1/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>591爬蟲</title>
+</head>
+<body>
+  <div id="app" class="mx-auto my-[2rem] max-w-[90%]">
+    <div class="overflow-x-auto">
+      <div class="btn-group mb-8">
+        <a href="./bug591.html" class="btn btn-active">原生</a>
+        <a href="./bug591_vuetify.html" class="btn">vuetify</a>
+      </div>
+      <table class="table table-zebra hover w-full">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th></th>
+            <th>標題</th>
+            <th>金額</th>
+            <th>樓層</th>
+            <th>房型</th>
+            <th>地區</th>
+            <th>街道</th>
+            <th>接洽</th>
+            <th>標籤</th>
+            <th>更新時間</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <tr v-for="item, index in rentData" :key="item.post_id" class="cursor-pointer" @click="redirect($event, `https://rent.591.com.tw/home/${item.post_id}`)">
+            <td>{{ index + 1 }}</td>
+            <td v-for="value in valueItem" :key="value">{{ item[value] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="./bug591.js"></script>
+</html>
